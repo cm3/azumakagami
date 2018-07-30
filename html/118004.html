@@ -4,11 +4,31 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="./lib/markdown-it.min.js"></script>
 <script type="text/javascript" src="./lib/markdown-it-emoji.min.js"></script>
+<script type="text/javascript" src="./lib/markdown-it-footnote.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 
 <script>
+var moveFootnote = function(){
+    //console.log(document.getElementsByClassName("footnotes"));
+    footenoteNode = document.getElementsByClassName("footnotes")[0];
+    document.getElementById("fn").innerHTML = footenoteNode.outerHTML;
+    footenoteNode.parentNode.removeChild(footenoteNode);
+}
+var observer = new MutationObserver(function(mutations){
+  for (var i=0; i < mutations.length; i++){
+    for (var j=0; j < mutations[i].addedNodes.length; j++){
+      if (mutations[i].addedNodes[j].nodeType == document.ELEMENT_NODE){
+        if (mutations[i].addedNodes[j].matches(".footnotes")){
+          moveFootnote();
+          observer.disconnect();
+        };
+      }
+    }
+  }
+});
+observer.observe(document.documentElement, {childList: true, subtree: true});
 window.onload = function(){
-    var md = window.markdownit("commonmark").use(window.markdownitEmoji);
+    var md = window.markdownit("commonmark").use(window.markdownitEmoji).use(window.markdownitFootnote);
     document.getElementById("ja").innerHTML = md.render(document.getElementById("ja").innerHTML);
     document.getElementById("en").innerHTML = md.render(document.getElementById("en").innerHTML);
 }
@@ -16,7 +36,9 @@ window.onload = function(){
 <style>
     body{background-color:#F9FFF3;}
     pre{overflow:auto!important;}
-    #ja, #en{padding:2em;}
+    #ja, #en, #fn{padding:2em;}
+    .footnotes-sep{display:none;}
+    .pure-g > div {box-sizing: border-box;}
 </style>
 </head>
 <body>
@@ -29,7 +51,9 @@ window.onload = function(){
 <div id="en" class="pure-u-1-3">
 [Jishō 4 fourth month 9th day](http://datetime.hutime.org/date/2152178).
 
-The lay priest and courtier, third rank, [Minamoto Yorimasa](https://en.wikipedia.org/wiki/Minamoto_no_Yorimasa) had been planning for a long time to overthrow the lay priest and Chancellor [Taira Kiyomori](https://en.wikipedia.org/wiki/Taira_no_Kiyomori). But realizing the difficulty of accomplishing this long-cherished ambition by his stratagem alone, he, together with his son Nakatsuna, the governor of Izu, secretly called this evening on Prince Mochihito, the second son of the ex-sovereign, at the Sanjō-Takakura Palace and urged him to join in the destruction of the Taira and to assume the rule of the country himself. He would be aided in the effort by Minamoto Yoritomo, the former assistant captain of the Military Guards, Right Division, and his followers of the Minamoto clan. The Prince instructed Munenobu, Scattered Rank, to issue a pronouncement rallying the country against the Taira. As Minamoto Jūrō Yoshimori, the youngest son of the imperial police Minamoto Tameyoshi, happened to be　in the capital, he was ordered to take the pronouncement to Yoritomo and to the other members of the Minamoto clan in the eastern provinces.　Yoshimori, appointed a private secretary to Hachijō-in, has changed his name to Yukiie. 
+The lay priest^[Nyūdō, literally, "one who has entered the way," a title given to those who had taken the Buddhist tonsure but who had not actually joined or entered a monastery. It was fashionable among members of the titled nobility to become lay priests, usually after retirement from civil office.] and courtier, third rank, [Minamoto Yorimasa](https://en.wikipedia.org/wiki/Minamoto_no_Yorimasa) had been planning for a long time to overthrow the lay priest and Chancellor [Taira Kiyomori](https://en.wikipedia.org/wiki/Taira_no_Kiyomori). But realizing the difficulty of accomplishing this long-cherished ambition by his stratagem alone, he, together with his son Nakatsuna, the governor of Izu, secretly called this evening on Prince Mochihito, the second son of the ex-sovereign, at the Sanjō-Takakura Palace and urged him to join in the destruction of the Taira and to assume the rule of the country himself. He would be aided in the effort by Minamoto Yoritomo, the former assistant captain of the Military Guards, Right Division, and his followers of the Minamoto clan. The Prince instructed Munenobu, Scattered Rank, to issue a pronouncement rallying the country against the Taira. As Minamoto Jūrō Yoshimori, the youngest son of the imperial police Minamoto Tameyoshi, happened to be　in the capital, he was ordered to take the pronouncement to Yoritomo and to the other members of the Minamoto clan in the eastern provinces.　Yoshimori, appointed a private secretary to Hachijō-in, has changed his name to Yukiie. 
+</div>
+<div id="fn" class="pure-u-1-3">
 </div>
 </div>
 </body>
