@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+
+[azuma-kagami-translation-project.118004txt]
+file_filter = <lang>/118004.txt
+source_file = en/118004.txt
+source_lang = en
+type = TXT
+
+

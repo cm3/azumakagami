@@ -1,5 +1,15 @@
 # Azuma Kagami Translation Project
 
+## setup
+
+- install tx [Installing the Client \| Transifex Documentation](https://docs.transifex.com/client/installing-the-client)
+    - `.transifexrc` is put in your home directory. This repository doesn't include it.
+
+```
+cd data
+source update.sh #fetch files from Transifex
+```
+
 ## Acknowledgement
 
 - Transifex: [Azuma Kagami Translation Project \- Transifex](https://www.transifex.com/azuma-kagami-translation-project/azuma-kagami-translation-project/)
